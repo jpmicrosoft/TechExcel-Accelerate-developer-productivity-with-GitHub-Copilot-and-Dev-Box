@@ -92,20 +92,17 @@ namespace RazorPagesTestSample.Pages
             return RedirectToPage();
         }
 
-        public static void WriteToDirectory(ZipArchiveEntry entry, string destDirectory)
+        public static void WriteToDirectory(ZipArchiveEntry entry,
+                                                string destDirectory)
         {
-            string destFileName = Path.Combine(destDirectory, entry.FullName);
-
-            // Ensure the destination directory exists
-            Directory.CreateDirectory(Path.GetDirectoryName(destFileName));
-
-            // Validate the output path to prevent directory traversal attacks
-            if (!destFileName.StartsWith(destDirectory, StringComparison.OrdinalIgnoreCase))
+            string destFileName = Path.GetFullPath(Path.Combine(destDirectory, entry.FullName));
+            string fullDestDirPath = Path.GetFullPath(destDirectory + Path.DirectorySeparatorChar);
+            if (!destFileName.StartsWith(fullDestDirPath))
             {
-            throw new InvalidOperationException("Entry is trying to write outside of the destination directory.");
+                throw new System.InvalidOperationException("Entry is outside the target dir: " +
+                                                                                     destFileName);
             }
-
-            entry.ExtractToFile(destFileName, overwrite: true);
+            entry.ExtractToFile(destFileName);
         }
     }
 }
