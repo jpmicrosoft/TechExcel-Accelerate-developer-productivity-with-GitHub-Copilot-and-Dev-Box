@@ -1,13 +1,14 @@
 name: Deploy Infrastructure
-
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      targetEnv:
+        description: 'Target environment'
+        required: true
+        default: 'test'
 
 env:
-  targetEnv: 
-    description: 'Target environment'
-    required: true
-    default: 'test'
+  targetEnv: ${{ github.event.inputs.targetEnv }}
 
 jobs:
   deploy:
