@@ -4,7 +4,10 @@ on:
   workflow_dispatch
 
 env:
-  targetEnv: dev
+  targetEnv: 
+    description: 'Target environment'
+    required: true
+    default: 'test'
 
 jobs:
   deploy:
