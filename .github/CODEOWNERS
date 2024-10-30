@@ -1,0 +1,7 @@
+# Each line is a file pattern followed by one or more owners
+
+# The root directory and all subdirectories
+*       @jpmicrosoft @jsolarz
+
+# Specific directory
+/src/Application/ @jsolarz
